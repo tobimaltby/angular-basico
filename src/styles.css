@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+/* Puede agregar estilos globales a este archivo y también importar otros archivos de estilo */
+
+/* Desde el material adjunto "7.1 estilos-basicos.css" copiamos todo el código .css y lo pegamos aquí. De esta
+manera podemos modificar los estilos de nuesta aplicación. */
+
+* { /* Para cambiar la fuente */
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 200;
+  } 
+  
+  html, body { /* Títulos y separaciones del color del body */
+    
+    background: white;
+    margin: 20px;
+    color: #3e4144;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  
+  dd {
+    font-weight: bold;
+  }
+  
+  button { /* Configuración de botones */
+    background-color: black;
+    border-radius: 5px;
+    border: 0px;
+    color: white;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 5px 10px;
+  }
+  
+  button:hover {
+    background-color: #3e4144;
+  }
+  
+  button:focus{ 
+    outline: none;
+  }
+  
+  .p-1 {
+    padding: 1px;
+  }

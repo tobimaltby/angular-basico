@@ -1,0 +1,66 @@
+<!-- <h1>Heroe Component Works</h1>  --><!-- Defino un encabezado cualquiera. -->
+
+<!-- Es importante recordar que a partir de todo lo definido hasta este punto, no es suficiente para que funcione
+mi aplicación. Es decir, si compilamos sin importar nuestro nuevo componente en algún módulo no veremos nada en
+el navegador web. Como se define un nuevo componente, lo que falta es hacer una importación. Se tiene que importar
+el componente HeroeComponent en un módulo, en el único módulo que tenemos actualmente: "app.module.ts". Como
+es un componente lo vamos a colocar en la declaraciones (ver archivo). Finalmente, para poder mostrar el
+HeroeCompoent en el HTML, es decir, para que pueda verse en el navegador web lo que definí anteriormente ("Heroe
+ Component Works"), lo que se hace es definir dentro del archivo "app.component.html" mi "app-heroe" (ver archivo).
+ -->
+
+<!-- Recapitulando: cuando se crea un nuevo componente, tiene que estar importado en un módulo (usualmente se coloca
+dentro del módulo definido para nuestro componente, pero como sólo tenemos un módulo por el momento, va colocado
+allí). También, se creó un nuevo directorio llamado heroe porque tiene un par de archivos en conjunto (el archivo
+HTML y el archivo de TypeScript). -->
+
+<h1> {{ nombre }} </h1> <!-- Defino un encabezado que muestre el nombre de mi Héroe. -->
+
+<!-- Lo que hago a continuación es crear una lista de descripción: -->
+<dl> <!-- De esta manera creo una lista de descripción (ver explicación más abajo). Esta es una etiqueta HTML común
+y corriente que me permite colocar una tabla de descripción.-->
+
+    <td> Nombre: </td> <!-- El elemento td representa una celda de datos en una tabla. -->
+    <dd> {{ nombre }} </dd> <!-- El elemento dd representa la descripción, definición o valor, parte de un grupo de
+    descripción de términos en una lista de descripción (elemento dl). -->
+
+    <td> Edad: </td>
+    <dd> {{ edad }} </dd>
+
+    <td> Función: </td>
+    <dd> {{ obtenerNombre() }} </dd> <!-- Se imprime por pantalla lo que retorna mi función. -->
+
+    <td> Capitalizado (en mayúsculas): </td>
+    <dd> {{ nombreCapitalizado }} </dd> <!-- Se imprime por pantalla el nombre de mi héroe escrito en mayúsculas -->
+    <!-- <dd> {{ nombre.toUpperCase() }} </dd> --> <!-- Se puede hacer de esta manera y sólo se utiliza esta línea de
+    código, en el archivo "heroe.component.ts" no se hace nada. El método toUpperCase() convierte todos los caracteres
+    alfabéticos de una cadena a mayúsculas. -->
+
+</dl> <!-- El elemento dl representa una lista de asociaciones que consta de cero o más grupos de nombre y valor (una
+lista de descripción). Un grupo de nombre-valor consta de uno o más nombres (elementos dt) seguidos de uno o
+más valores (elementos dd), ignorando cualquier nodo que no sea los elementos dt y dd. Dentro de un solo elemento
+dl, no debe haber más de un elemento dt para cada nombre. -->
+
+<!-- Se definen 2 botenes, uno para "Cambiar Héroe" y otro para "Cambiar Edad". Luego, se defienen los métodos 
+necesarios (ver archivo de TypeScript) para que estos botones cambien los estados del nombre del héroe y su edad,
+respectivamente, cuando se los presione:  -->
+
+<button (click)="cambiarNombre()"> <!-- Asignamos el método cambiarNombre () al evento "click" de este botón. -->
+    Cambiar Héroe
+</button>
+
+<button (click)="cambiarEdad()"> <!-- Asignamos el método cambiarEdad () al evento "click" de este botón. -->
+    Cambiar Edad
+</button>
+
+<!-- Hay varias cosas interesantes en el ciclo de detección de cambios que tiene Angular. Como puede verse, es muy
+fácil hacer un cambio y una actualización en todo el DOM. -->
+
+<!-- Mediante cada botón Angular cambia sólo lo que tiene que cambiar. Los cambios lo hace de manera muy eficiente.
+Incluso si se vuelven a tocar los botones no se producen cambios, a pesar de que se está volviendo a ejecutar el
+código. Esto es parte de la base del concepto "ONE WAY DATA BINDING" o enlazado en una sola vía, es decir, las
+propiedades definidas (nombre, edad) están enlazadas de una única manera. Esto último quiere decir que si la
+propiedad cambia en el componente TS se van a redibujar en el HTML, pero no hay manera de que yo, por el 
+momento, cambie la propiedad desde el template y automáticamente lo cambie al HeroeComponent (si bien hay formas de
+hacer esto, se recomienda no trabajar con "TWO WAY DATA BINDING", es de buena práctica evitar aplicar esto). Se
+recomienda tratar en lo posible de trabajar siempre con enlazado en una sola vía. -->

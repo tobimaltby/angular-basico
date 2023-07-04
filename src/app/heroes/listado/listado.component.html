@@ -1,0 +1,89 @@
+
+<div *ngIf="heroeBorrado; else noBorrado"> <!-- Para utilizar la directiva estructural *ngIf lo que se hace es utilizar
+una condición que tiene que retornar "true" o "false". Todo este bloque HTML contenido entre <div>...</div> solo va a
+aparecer si este *ngIf es igual a "true" (si es "false" no aparece). Para ello es importante saber cuándo un héroe
+está borrado o no (la clave es saber cuándo héroeBorrado es un string vacío). Por ejemplo, se puede colocar una
+condición que me arroje "true" cuando es diferente a un string vacío: *ngIf="heroeBorrado !== ''". También puede
+funcionar con una condición que arroje "true" cuando la longitud de mi string heroeBorrado es mayor a 0:
+*ngIf="heroeBorrado.length > 0". Cuando heroeBorrado es igual a un string vacío (es decir inicialmente y finalmente
+luego de borrar el último héroe de la lista) esta condición arroja un "false" y este bloque no se muestra.
+Otra alternativa interesante es simplemente escribir "heroeBorrado" como condición, lo cual funciona perfectamente 
+porque esta directiva *ngIf es lo suficientemente inteligente para interpretar un string vacío como una condición que
+no se cumple y arrojar "false". -->
+    <h3>
+        Héroe borrado: <small> {{  heroeBorrado }} </small> <!-- Si se requiere mostrar alguna información en el HTML
+        significa que se debe definir algún método o alguna propiedad en la clase que me sirva para mostrarlo. -->
+    </h3>    
+</div>
+
+<!-- Existe un problema que puede apreciarse por medio del navegador web y es que si no utilizamos la DIRECTIVA
+ESTRUCTURAL *ngIf como lo hicimos arriba, aparece el encabezado de sección "Héroe borrado" aun cuando no se ha borrado
+nada. Por lo tanto, lo que se requiere es mostrar ese encabezado de manera condicional, es decir, si no se borra nada
+no debería aparecer, de lo contrario si. Entonces, este encabezado es ocultado a menos que tengamos un héroe borrado.
+Es para esto que se utiliza la DIRECTIVA ESTRUCTURAL *ngIf -->
+
+<!-- Sería interesante que aparezca un mensaje en el navegador web que diga "No ha borrado nada" cuando todavía no se
+ha borrado ningún héroe del listado o cuando se termina de borrar el último héroe de la lista. Para lograr esto, se
+podría definir otro *ngIf utilizando la negación de la condición establecida anteriormente: -->
+
+<!-- <div *ngIf="!heroeBorrado"> --> <!-- Cambiamos la condición y en lugar de evaluar "héroeBorrado" cuando tiene 
+algo, puedo evaluar cuando no tenga nada. Con el signo de admiración hago la negación de la condición. -->
+        <!-- <h3>No ha borrado nada.</h3> --> <!-- Este mensaje aparece inicialmente en el navegador web. En el
+        instante que se empieza a borrar la lista desaparece el mensaje y vuelve a aprecer cuando se termina de borrar
+        el último héroe de la lista.  -->
+<!-- </div> -->
+
+<!-- Esta última opción no sería del todo conveniente y es por ello que se utiliza un solo *ngIf pero con un "else"
+seguido de la condición establecida (VER ARRIBA). Entonces, la condición establecida en el 1ER bloque debe regresar
+un valor booleano para mostrar el contenido de dicho bloque, y sino, mediante un "else" seguido de una REFERENCIA
+LOCAL (que en este caso es "noBorrado") se debe mostrar el mensaje del siguiente bloque: -->
+
+<ng-template #noBorrado> <!-- <ng-template> es un elemento propio de Angular que sirve para renderizar HTML. Nunca se
+muestra directamente. Su nomenclatura tiene sentido porque es un template lo que voy a mostrar. Esto no tiene ninguna
+contra parte pues simplemente va a mostrar el contenido escrito a continuación basado basado en la condición en la 
+condición del "else". La referencia local se identifica con el símbolo numeral "#". La referencia local no es algo
+que exista en el componente de TypeScript. Esta referencia local es del lado del template. En pocas palabras, lo que
+estoy diciendo es que si la condición de "heroeBorrado" no se cumple, entonces muestra este template. -->
+    <h3>No ha borrado nada.</h3> <!-- Este mensaje aparece inicialmente en el navegador web. En el instante que se
+        empieza a borrar la lista desaparece el mensaje y vuelve a aprecer cuando se termina de borrar el último héroe
+        de la lista.  -->
+    <!-- Aquí se podría poner muchas líneas de código y no solo un simple h3. Se podría poner un gran bloque de
+    código HTML -->
+</ng-template>
+
+<button (click)="borrarHeroe()"> <!-- Este es un método definido en el componente de TypeScript. -->
+    Borrar
+</button>
+
+<p>Listado de Héroes</p> <!-- El elemento p representa un párrafo. -->
+
+<ul> <!-- Mediante ul defino una lista de elementos, donde el orden de los elementos no es importante, es decir,
+donde cambiar el orden no cambiaría materialmente el significado del documento. -->
+
+    <li *ngFor="let heroe of heroes; let i = index"> <!-- Directiva estructural similar a un ciclo for pero definida
+        en el mismo template HTML. Se declara una variable llamada heroe y heroes es el arreglo definido en el
+        ListadoComponent. La variable heroe es la referencia a cada uno de los valores que están dentro de heroes.
+        Si quisiera puedo agregar el índice definiendo una variable llamada "i" y utilizando el "index" para
+        extraerlo. La variable "i" va a apuntar a cada al índice de cada elemento del arreglo. Se podría utilizar una
+        lista ordenada para que aparezcan los números pero en este caso lo interesante es hacerlo manualmente. -->
+        {{ i + 1 }} - {{ heroe }} <!-- Si yo borro algún héroe del arreglo, automáticamente Angular se va a encargar de renderizar 
+        nuevamente lo que cambió. -->
+    </li> <!-- El elemento li representa un elemento de lista. Si su elemento principal es un elemento ol, ul o menu,
+    entonces el elemento es un elemento de la lista del elemento principal, tal como se define para esos elementos.
+    De lo contrario, el elemento de la lista no tiene una relación definida relacionada con la lista con ningún otro
+    elemento li. -->
+    <!--
+    <li> {{ heroes[0] }} </li>
+    <li> {{ heroes[1] }} </li>  
+    <li> {{ heroes[2] }} </li> 
+    <li> {{ heroes[3] }} </li> --> <!-- Se podría hacer de esta manera, pero esta idea tiene algunos problemas, por 
+    ejemplo, podría no saber cuántos elementos tengo en el arreglo, o puede ser que alguno se modifique, o que el
+    primer elemento no esté, etc. La manera más fácil de hacer toda esta carpintería es utilizar la directiva *ngFor
+    como se hizo anteriormente. Utilizando esta DIRECTIVA ESTRUCTURAL, la cual me permite cambiar y manipular el DOM
+    de manera muy fácil, puedo en usa sola línea. En conclusión, la directiva *ngFor me permite duplicar elementos
+    en el HTML de manera muy simple. -->
+</ul>
+
+<!-- IMPORTANTE: la directiva estructural *ngFor lo que hace es dulicar elementos en base a la cantidad de elementos
+que tenga el arreglo. Requiere que siempre haya que mandar un arreglo, o sea algo que sea iterable, es decir que se
+pueda hacer mediante algún ciclo. -->
